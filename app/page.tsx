@@ -11,19 +11,15 @@ import UserProfile from "@/components/auth/UserProfile";
 
 // Imports des composants UI et des icônes
 import { Button } from "@/components/ui/button";
-import { Crown, Plus, Mic, ArrowRight, Folder, FileText, Sparkles, X, ExternalLink, Video, Music } from "lucide-react";
+import { Crown, Folder, FileText, Sparkles, X } from "lucide-react";
 
 // Import du composant de chat
 import ChatInterface from "@/components/chat/ChatInterface";
 // Import du composant d'authentification automatique
 import AuthPrompt from "@/components/auth/AuthPrompt";
-// Import du modal des médias
-import MediaModal from "@/components/chat/MediaModal";
-import MediaPreviewModal from "@/components/chat/MediaPreviewModal";
-import SelectedMedia from "@/components/chat/SelectedMedia";
+// Import du composant unifié
+import UnifiedInput from "@/components/UnifiedInput";
 import { MediaItem } from "@/components/chat/mediaTypes";
-import AspectRatioSelector from "@/components/ui/aspect-ratio-selector";
-import ModelSelector from "@/components/ui/model-selector";
 
 
 export default function AIDesignToolV2() {
@@ -31,19 +27,9 @@ export default function AIDesignToolV2() {
   const [prompt, setPrompt] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showChatInterface, setShowChatInterface] = useState(false);
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem[]>([]);
-  const [showMediaModal, setShowMediaModal] = useState(false);
-  const [previewMedia, setPreviewMedia] = useState<MediaItem | null>(null);
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
-  const [previewPosition, setPreviewPosition] = useState<{ x: number; y: number } | null>(null);
-  const [aspectRatio, setAspectRatio] = useState("16:9");
-  const [selectedModel, setSelectedModel] = useState("claude-4-sonnet");
   
   // Accès au store Zustand pour l'état global (utilisateur, prompt sauvegardé)
   const { user, setUser, promptBeforeLogin, setPromptBeforeLogin } = useAppStore();
-
-  // Détermine si le bouton d'envoi doit être actif
-  const isArrowActive = prompt.trim().length > 0 || selectedMedia.length > 0;
 
   // Effet pour gérer l'état d'authentification et restaurer le prompt après connexion
   useEffect(() => {
@@ -90,46 +76,12 @@ export default function AIDesignToolV2() {
   }, [showChatInterface]);
 
 
-  // Gère le clic sur le bouton d'envoi du prompt
-  const handleSubmit = () => {
-    if (!isArrowActive) return;
-
-    if (user) {
-      // Si l'utilisateur est connecté, on peut traiter le prompt
-      console.log("Utilisateur connecté. Envoi du prompt :", prompt);
-      console.log("Médias sélectionnés :", selectedMedia);
-      // Afficher l'interface de chat
-      setShowChatInterface(true);
-      
-    } else {
-      // Si l'utilisateur n'est pas connecté :
-      // 1. Sauvegarder le prompt actuel dans le store Zustand
-      setPromptBeforeLogin(prompt);
-      // 2. Ouvrir la modale de connexion
-      setShowLoginModal(true);
-    }
-  };
-
-  const handleSelectMedia = (media: MediaItem) => {
-    setSelectedMedia(prev => [...prev, media]);
-    setShowMediaModal(false);
-  };
-
-  const removeSelectedMedia = (mediaId: string) => {
-    setSelectedMedia(prev => prev.filter(media => media.id !== mediaId));
-  };
-
-  const handleMediaPreview = (media: MediaItem, event: React.MouseEvent) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setPreviewMedia(media);
-    setPreviewPosition({ x: rect.left + rect.width / 2, y: rect.top });
-    setShowPreviewModal(true);
-  };
-
-  const handleMediaPreviewClose = () => {
-    setShowPreviewModal(false);
-    setPreviewMedia(null);
-    setPreviewPosition(null);
+  // Gère l'envoi authentifié du prompt
+  const handleAuthenticatedSend = (promptText: string, media: MediaItem[]) => {
+    console.log("Utilisateur connecté. Envoi du prompt :", promptText);
+    console.log("Médias sélectionnés :", media);
+    // Afficher l'interface de chat
+    setShowChatInterface(true);
   };
 
   return (
@@ -145,19 +97,7 @@ export default function AIDesignToolV2() {
         />
       )}
 
-      {/* Modal des médias */}
-      <MediaModal
-        isOpen={showMediaModal}
-        onClose={() => setShowMediaModal(false)}
-        onSelectMedia={handleSelectMedia}
-      />
 
-      {/* Modal de preview des médias */}
-      <MediaPreviewModal
-        isOpen={showPreviewModal}
-        media={previewMedia}
-        position={previewPosition}
-      />
       
       {/* Interface par défaut - masquée pendant le chat */}
       {!showChatInterface && (
@@ -211,101 +151,14 @@ export default function AIDesignToolV2() {
 
             {/* AI Prompt Section */}
             <div className="w-full max-w-3xl mb-12">
-              <div className="relative">
-                <div
-                  className="absolute inset-x-4 top-5 h-full bg-gradient-to-r from-cyan-200 to-purple-300 rounded-2xl filter blur-2xl opacity-50 -z-10"
-                  aria-hidden="true"
-                />
-                <div className="relative rounded-2xl bg-gradient-to-r from-[#d1f5fa] to-purple-200 p-[1.5px]">
-                  <div className="bg-background backdrop-blur-lg rounded-[15px] p-4">
-                    <div className="relative">
-                      {/* Le textarea est un composant contrôlé lié à l'état `prompt` */}
-                      <textarea
-                        placeholder="Describe your idea, and I'll bring it to life"
-                        className="w-full border-0 bg-transparent text-sm placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 py-1 resize-none min-h-[3rem]"
-                        rows={2.5}
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                      />
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <button 
-                            onClick={() => setShowMediaModal(true)}
-                            className="bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full h-8 w-8 flex items-center justify-center"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                          <AspectRatioSelector
-                            value={aspectRatio}
-                            onChange={setAspectRatio}
-                          />
-                          <ModelSelector
-                            value={selectedModel}
-                            onChange={setSelectedModel}
-                          />
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"><Mic className="w-5 h-5 text-gray-700" /></button>
-                          
-                          {/* Le bouton flèche est maintenant dynamique et gère l'envoi */}
-                          <button 
-                            onClick={handleSubmit}
-                            disabled={!isArrowActive}
-                            className={`rounded-full p-2 transition-colors ${
-                              isArrowActive 
-                                ? 'bg-purple-600 hover:bg-purple-700 text-white cursor-pointer' 
-                                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                            }`}
-                          >
-                            <ArrowRight className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Zone des previews des médias (remplace les boutons de suggestion) */}
-                      {selectedMedia.length > 0 && (
-                        <div className="flex flex-wrap gap-2 mt-3 bg-gradient-to-r from-[#defbff] to-purple-100 -mx-4 -mb-4 px-4 pb-4 pt-3 rounded-b-2xl">
-                          {selectedMedia.map((media) => (
-                            <div key={media.id} className="relative group">
-                              <div 
-                                className="w-10 h-10 bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer"
-                                onMouseEnter={(e) => handleMediaPreview(media, e)}
-                                onMouseLeave={handleMediaPreviewClose}
-                              >
-                                {media.type === 'image' ? (
-                                  <img
-                                    src={media.thumbnail || media.url}
-                                    alt={media.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                                    {media.type === 'video' ? (
-                                      <Video className="w-6 h-6 text-gray-500" />
-                                    ) : media.type === 'audio' ? (
-                                      <Music className="w-6 h-6 text-gray-500" />
-                                    ) : (
-                                      <FileText className="w-6 h-6 text-gray-500" />
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-                              {/* Bouton de suppression */}
-                              <button
-                                onClick={() => removeSelectedMedia(media.id)}
-                                className="absolute -top-2 -right-2 w-5 h-5 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                              >
-                                <X className="w-3 h-3" />
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <UnifiedInput
+                value={prompt}
+                onChange={setPrompt}
+                onAuthenticatedSend={handleAuthenticatedSend}
+                showLoginModal={() => setShowLoginModal(true)}
+                placeholder="Describe your idea, and I'll bring it to life"
+                mediaPreviewSize="small"
+              />
               <p className="text-center text-xs text-gray-500/80 mt-4">
                 Canva AI can make mistakes. Please check for accuracy.{" "}
                 <button className="underline hover:no-underline">See terms</button>
