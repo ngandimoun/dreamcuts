@@ -126,12 +126,12 @@ export default function AIDesignToolV2() {
                 {user ? (
                   <div className="flex items-center gap-2">
                     <UserProfile />
-                    <Button className="bg-purple-100 cursor-pointer hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
+                    <Button className="bg-purple-100 dark:bg-purple-300 cursor-pointer hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
                       <Crown className="w-4 h-4 mr-2 text-yellow-500" /> Upgrade your plan
                     </Button>
                   </div>
                 ) : (
-                  <Button className="bg-purple-100 hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
+                  <Button className="bg-purple-100 dark:bg-purple-300 hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
                     <Crown className="w-4 h-4 mr-2 text-yellow-500" /> Upgrade your plan
                   </Button>
                 )}
