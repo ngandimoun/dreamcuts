@@ -12,6 +12,7 @@ import UserProfile from "@/components/auth/UserProfile";
 // Imports des composants UI et des icônes
 import { Button } from "@/components/ui/button";
 import { Crown, Folder, FileText, Sparkles, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 // Import du composant de chat
 import ChatInterface from "@/components/chat/ChatInterface";
@@ -108,7 +109,7 @@ export default function AIDesignToolV2() {
         <div className="min-h-screen font-sans bg-background">
           {/* Conteneur du header avec masque de fondu */}
           <div
-            className="absolute top-0 left-0 w-full h-1/4 bg-gradient-to-r from-[#abf4fd] via-blue-100 to-purple-300"
+            className="absolute top-0 left-0 w-full h-1/2 dark:h-0 bg-gradient-to-r from-[#abf4fd] via-blue-100 to-purple-300"
             style={{ maskImage: 'linear-gradient(to bottom, black 20%, transparent 100%)' }}
           />
 
@@ -116,20 +117,25 @@ export default function AIDesignToolV2() {
             {/* Header Section */}
             <header className="flex justify-between items-center p-6">
               <div className="flex-1" />
-
-              {/* Affiche le profil de l'utilisateur s'il est connecté, sinon le bouton "Upgrade" */}
-              {user ? (
-                <div className="flex items-center gap-2">
-                  <UserProfile />
-                  <Button className="bg-purple-100 cursor-pointer hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
+              
+              {/* Bouton de toggle de thème */}
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
+                
+                {/* Affiche le profil de l'utilisateur s'il est connecté, sinon le bouton "Upgrade" */}
+                {user ? (
+                  <div className="flex items-center gap-2">
+                    <UserProfile />
+                    <Button className="bg-purple-100 cursor-pointer hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
+                      <Crown className="w-4 h-4 mr-2 text-yellow-500" /> Upgrade your plan
+                    </Button>
+                  </div>
+                ) : (
+                  <Button className="bg-purple-100 hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
                     <Crown className="w-4 h-4 mr-2 text-yellow-500" /> Upgrade your plan
                   </Button>
-                </div>
-              ) : (
-                <Button className="bg-purple-100 hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
-                  <Crown className="w-4 h-4 mr-2 text-yellow-500" /> Upgrade your plan
-                </Button>
-              )}
+                )}
+              </div>
             </header>
 
             {/* Main Content */}
@@ -138,7 +144,7 @@ export default function AIDesignToolV2() {
               {activeTab === "ai" && (
                 <>
                   <div className="text-center mb-12 pt-16">
-                    <h1 className="text-5xl ibarra-real-nova bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent mb-10">
+                    <h1 className="text-5xl ibarra-real-nova bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent dark:text-white mb-10">
                       What will you design today?
                     </h1>
                   </div>
@@ -147,19 +153,19 @@ export default function AIDesignToolV2() {
                   <div className="flex justify-center gap-2 mb-8">
                     <button
                       onClick={() => setActiveTab("designs")}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 hover:bg-gray-100"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-500"
                     >
                       <Folder className="w-4 h-4" /> Your designs
                     </button>
                     <button
                       onClick={() => setActiveTab("templates")}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 hover:bg-gray-100"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-500"
                     >
                       <FileText className="w-4 h-4" /> Templates
                     </button>
                     <button
                       onClick={() => setActiveTab("ai")}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-purple-800 bg-gradient-to-r from-cyan-100/70 to-purple-200/70 shadow-sm border border-purple-200/50"
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-purple-800 dark:text-purple-50 bg-gradient-to-r from-cyan-100/70 to-purple-200/70 shadow-sm border border-purple-200/50"
                     >
                       <Sparkles className="w-4 h-4 text-purple-600" /> Prompt AI
                     </button>
@@ -174,7 +180,7 @@ export default function AIDesignToolV2() {
                       placeholder="Describe your idea, and I'll bring it to life"
                       mediaPreviewSize="small"
                     />
-                    <p className="text-center text-xs text-gray-500/80 mt-4">
+                    <p className="text-center text-xs text-gray-500/80 dark:text-gray-50 mt-4">
                       Canva AI can make mistakes. Please check for accuracy.{" "}
                       <button className="underline hover:no-underline">See terms</button>
                       {" • "}

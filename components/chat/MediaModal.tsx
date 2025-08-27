@@ -67,12 +67,12 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-[80vh] flex flex-col">
+             <div className="bg-background rounded-2xl shadow-2xl w-full max-w-4xl h-[80vh] flex flex-col">
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <h2 className="text-xl font-semibold text-gray-900">Add media</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-50">Add media</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 cursor-pointer hover:text-gray-600 transition-colors rounded-full bg-primary p-2"
+            className="text-gray-400 dark:text-gray-50 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 transition-colors rounded-full bg-primary p-2"
           >
             <X className="w-4 h-4" />
           </button>
@@ -84,7 +84,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
             className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors ${
               activeTab === 'uploads'
                 ? 'text-purple-600 border-b-2 border-purple-600'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-gray-600 dark:text-gray-50 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Upload className="w-4 h-4" />
@@ -95,7 +95,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
             className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors ${
               activeTab === 'designs'
                 ? 'text-purple-600 border-b-2 border-purple-600'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-gray-600 dark:text-gray-50 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Palette className="w-4 h-4" />
@@ -106,7 +106,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
             className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors ${
               activeTab === 'templates'
                 ? 'text-purple-600 border-b-2 border-purple-600'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-gray-600 dark:text-gray-50 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Sparkles className="w-4 h-4" />
@@ -116,7 +116,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
 
                  <div className="p-6 flex-1 flex flex-col min-h-0">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-medium text-gray-900">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50">
               {activeTab === 'uploads' ? 'Media uploads' : 
                activeTab === 'designs' ? 'Generated designs' : 
                'AI Templates'}
@@ -151,9 +151,9 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
                 onClick={() => onSelectMedia(media)}
                 className="group cursor-pointer rounded-lg border border-gray-200 hover:border-purple-300 transition-colors overflow-hidden"
               >
-                                 <div className="aspect-square bg-gray-50 relative overflow-hidden">
+                                 <div className="aspect-square bg-background relative overflow-hidden">
                    {media.type === 'image' ? (
-                     <div className="w-full h-full flex items-center justify-center bg-gray-50">
+                     <div className="w-full h-full flex items-center justify-center bg-background">
                        <img
                          src={media.thumbnail || media.url}
                          alt={media.name}
@@ -161,14 +161,14 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
                        />
                      </div>
                    ) : (
-                     <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                     <div className="w-full h-full flex items-center justify-center bg-background">
                        {getFileIcon(media.type)}
                      </div>
                    )}
                   
                                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                       <div className="bg-white rounded-full p-2">
+                       <div className="bg-background rounded-full p-2">
                          {activeTab === 'templates' ? (
                            <Sparkles className="w-4 h-4 text-purple-600" />
                          ) : (
@@ -180,7 +180,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
                 </div>
                 
                                  <div className="p-2">
-                   <p className="text-xs text-gray-700 truncate" title={media.name}>
+                   <p className="text-xs text-gray-700 dark:text-gray-50 truncate" title={media.name}>
                      {media.name}
                    </p>
                    {activeTab === 'templates' ? (
@@ -188,7 +188,7 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
                        AI Template
                      </p>
                    ) : (
-                     <p className="text-xs text-gray-500">
+                     <p className="text-xs text-gray-500 dark:text-gray-50">
                        {media.uploadedAt.toLocaleDateString()}
                      </p>
                    )}
@@ -200,17 +200,17 @@ export default function MediaModal({ isOpen, onClose, onSelectMedia }: MediaModa
 
                      {currentMedia.length === 0 && activeTab !== 'templates' && (
              <div className="text-center py-12 flex flex-col items-center justify-center flex-1">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-4">
                 {activeTab === 'uploads' ? (
-                  <Upload className="w-8 h-8 text-gray-400" />
+                  <Upload className="w-8 h-8 text-gray-400 dark:text-gray-50" />
                 ) : (
-                  <Palette className="w-8 h-8 text-gray-400" />
+                  <Palette className="w-8 h-8 text-gray-400 dark:text-gray-50" />
                 )}
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">
                 {activeTab === 'uploads' ? 'No uploaded media' : 'No generated designs'}
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-50">
                 {activeTab === 'uploads' 
                   ? 'Upload your first media file to get started'
                   : 'Generate your first design to see it here'

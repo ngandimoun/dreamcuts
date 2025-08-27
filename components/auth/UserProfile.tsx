@@ -31,7 +31,7 @@ export default function UserProfile() {
     <div className="relative">
       <Button 
         onClick={() => setIsOpen(!isOpen)} 
-        className="p-0 h-auto w-auto cursor-pointer bg-transparent hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+        className="p-0 h-8 w-8 cursor-pointer bg-transparent hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
       >
         <UserAvatar 
           avatarUrl={avatarUrl}

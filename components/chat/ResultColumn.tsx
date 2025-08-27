@@ -40,9 +40,9 @@ export default function ResultColumn({
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Header de la colonne */}
-      <div className="border-b border-gray-200 p-4 bg-gray-50 flex-shrink-0">
-        <h3 className="text-lg font-semibold text-gray-800">Résultat de la génération</h3>
-        <p className="text-sm text-gray-600">
+      <div className="border-b border-gray-200 p-4 bg-background flex-shrink-0">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-50">Résultat de la génération</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-50">
           {isGenerating ? "Génération en cours..." : "Résultat final"}
         </p>
       </div>
@@ -80,11 +80,11 @@ export default function ResultColumn({
 
             {/* Barre de progression */}
             <div className="w-full max-w-md mb-6">
-              <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <div className="flex justify-between text-sm text-gray-600 dark:text-gray-50 mb-2">
                 <span>Progression</span>
                 <span>{Math.round((currentStep / generationSteps.length) * 100)}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-background rounded-full h-2">
                 <div 
                   className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
                   style={{ width: `${(currentStep / generationSteps.length) * 100}%` }}
@@ -120,21 +120,21 @@ export default function ResultColumn({
             {finalResult ? (
               <>
                 {/* Aperçu du résultat */}
-                <div className="flex-1 bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
+                <div className="flex-1 bg-background rounded-lg mb-4 flex items-center justify-center">
                   {contentType === "image" ? (
                     <div className="text-center">
                       <Image className="w-16 h-16 text-gray-400 mx-auto mb-2" />
-                      <p className="text-gray-600">Image générée</p>
+                      <p className="text-gray-600 dark:text-gray-50">Image générée</p>
                     </div>
                   ) : contentType === "video" ? (
                     <div className="text-center">
                       <Video className="w-16 h-16 text-gray-400 mx-auto mb-2" />
-                      <p className="text-gray-600">Vidéo générée</p>
+                      <p className="text-gray-600 dark:text-gray-50">Vidéo générée</p>
                     </div>
                   ) : (
                     <div className="text-center">
                       <FileText className="w-16 h-16 text-gray-400 mx-auto mb-2" />
-                      <p className="text-gray-600">Contenu généré</p>
+                      <p className="text-gray-600 dark:text-gray-50">Contenu généré</p>
                     </div>
                   )}
                 </div>
@@ -153,15 +153,15 @@ export default function ResultColumn({
                 </div>
 
                 {/* Détails du résultat */}
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-medium text-gray-800 mb-2">Détails de la génération</h4>
-                  <p className="text-sm text-gray-600">
+                <div className="mt-4 p-4 bg-background rounded-lg">
+                  <h4 className="font-medium text-gray-800 dark:text-gray-50 mb-2">Détails de la génération</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-50">
                     {finalResult}
                   </p>
                 </div>
               </>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-500">
+              <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-50">
                 <p>En attente du résultat...</p>
               </div>
             )}

@@ -34,7 +34,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
               ? "bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200 text-purple-800"
               : isAssistantResponse
                 ? "bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-800"
-                : "bg-gray-100 text-gray-800"
+                : "bg-background text-gray-800 dark:text-gray-50"
         }`}>
           {/* Titre spécial pour les messages de conception et de réponse */}
           {isConceptionSummary && (
@@ -73,8 +73,8 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
                   className="max-w-full rounded-lg"
                 />
               ) : (
-                <div className="bg-gray-200 rounded-lg p-3 text-center">
-                  <span className="text-xs text-gray-600">Fichier joint</span>
+                <div className="bg-background rounded-lg p-3 text-center">
+                  <span className="text-xs text-gray-600 dark:text-gray-50">Fichier joint</span>
                 </div>
               )}
             </div>
@@ -82,7 +82,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           
           {/* Timestamp */}
           <div className={`text-xs mt-2 ${
-            isUser ? "text-blue-100" : "text-gray-500"
+            isUser ? "text-blue-100" : "text-gray-500 dark:text-gray-50"
           }`}>
             {message.timestamp.toLocaleTimeString([], { 
               hour: '2-digit', 

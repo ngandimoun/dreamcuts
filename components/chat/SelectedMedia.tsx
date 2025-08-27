@@ -23,8 +23,8 @@ export default function SelectedMedia({ media, onRemove }: SelectedMediaProps) {
   };
 
   return (
-    <div className="flex items-center gap-2 bg-gray-50 rounded-lg p-2 border border-gray-200">
-      <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+    <div className="flex items-center gap-2 bg-background rounded-lg p-2 border border-gray-200">
+      <div className="w-8 h-8 bg-background rounded flex items-center justify-center">
         {media.type === 'image' ? (
           <img
             src={media.thumbnail || media.url}
@@ -36,13 +36,13 @@ export default function SelectedMedia({ media, onRemove }: SelectedMediaProps) {
         )}
       </div>
       
-      <span className="text-sm text-gray-700 flex-1 truncate max-w-32">
+      <span className="text-sm text-gray-700 dark:text-gray-50 flex-1 truncate max-w-32">
         {media.name}
       </span>
       
       <button
         onClick={onRemove}
-        className="text-gray-500 hover:text-gray-700 transition-colors p-1"
+        className="text-gray-500 dark:text-gray-50 hover:text-gray-700 dark:hover:text-gray-200 transition-colors p-1"
       >
         <X className="w-3 h-3" />
       </button>

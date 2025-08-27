@@ -69,7 +69,7 @@ export default function ChatColumn({
       </div>
 
       {/* Zone de saisie fixe en bas */}
-      <div className="border-t border-gray-200 p-4 bg-white flex-shrink-0">
+      <div className="border-t border-gray-200 p-4 bg-background flex-shrink-0">
         <ChatInput
           value={inputValue}
           onChange={setInputValue}

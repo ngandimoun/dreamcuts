@@ -105,12 +105,12 @@ export default function YourDesignsContent() {
   return (
     <div className="w-full h-full">
       {/* Content Container with Rounded Borders - englobe tout à partir du titre */}
-      <div className="h-full bg-white rounded-sm border border-gray-200 overflow-hidden">
+      <div className="h-full bg-background rounded-sm border border-gray-200 overflow-hidden">
         <div className="custom-scrollbar overflow-y-auto h-full">
           {/* Page Header */}
           <div className="p-6 pb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Your Designs</h1>
-            <p className="text-gray-600">Manage and showcase your creative work</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50 mb-2">Your Designs</h1>
+            <p className="text-gray-600 dark:text-gray-50">Manage and showcase your creative work</p>
             <div className="mt-4">
               <Button className="bg-purple-100 cursor-pointer hover:bg-purple-200/80 text-purple-800 rounded-lg px-4 py-2 font-medium shadow-sm border border-purple-200/50">
                 <Download className="w-4 h-4 mr-2" /> Export All
@@ -123,7 +123,7 @@ export default function YourDesignsContent() {
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Search */}
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-50 w-4 h-4" />
                 <Input
                   placeholder="Search designs..."
                   value={searchQuery}
@@ -186,10 +186,10 @@ export default function YourDesignsContent() {
             {filteredDesigns.length === 0 && (
               <div className="text-center py-12">
                 <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-                  <Search className="w-8 h-8 text-gray-400" />
+                  <Search className="w-8 h-8 text-gray-400 dark:text-gray-50" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No designs found</h3>
-                <p className="text-gray-600">Try adjusting your search or filter criteria</p>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-50 mb-2">No designs found</h3>
+                <p className="text-gray-600 dark:text-gray-50">Try adjusting your search or filter criteria</p>
               </div>
             )}
           </div>
@@ -201,9 +201,9 @@ export default function YourDesignsContent() {
 
 function DesignCard({ design }: { design: Design }) {
   return (
-    <div className="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
+    <div className="bg-background rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group cursor-pointer">
       {/* Image */}
-      <div className="aspect-square bg-gray-100 relative overflow-hidden">
+      <div className="aspect-square bg-background relative overflow-hidden">
         <img
           src={design.imageUrl}
           alt={design.title}
@@ -221,11 +221,11 @@ function DesignCard({ design }: { design: Design }) {
 
       {/* Content */}
       <div className="p-3">
-        <h3 className="font-medium text-gray-900 text-sm line-clamp-1 mb-1">{design.title}</h3>
-        <p className="text-xs text-gray-500 line-clamp-1 mb-2">{design.description}</p>
+        <h3 className="font-medium text-gray-900 dark:text-gray-50 text-sm line-clamp-1 mb-1">{design.title}</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-50 line-clamp-1 mb-2">{design.description}</p>
         
         {/* Stats */}
-        <div className="flex items-center justify-between text-xs text-gray-500">
+        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-50">
           <div className="flex items-center gap-2">
             <span className="flex items-center gap-1">
               <Eye className="w-3 h-3" />
@@ -244,10 +244,10 @@ function DesignCard({ design }: { design: Design }) {
 
 function DesignListItem({ design }: { design: Design }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg transition-shadow">
+    <div className="bg-background rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-lg transition-shadow">
       <div className="flex gap-4">
         {/* Image */}
-        <div className="w-32 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+        <div className="w-32 h-24 bg-background rounded-lg overflow-hidden flex-shrink-0">
           <img
             src={design.imageUrl}
             alt={design.title}
@@ -258,13 +258,13 @@ function DesignListItem({ design }: { design: Design }) {
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-semibold text-gray-900">{design.title}</h3>
+            <h3 className="font-semibold text-gray-500 dark:text-gray-50">{design.title}</h3>
             <Badge variant="outline" className="text-xs">
               {design.category}
             </Badge>
           </div>
           
-          <p className="text-sm text-gray-600 mb-2">{design.description}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-50 mb-2">{design.description}</p>
           
           {/* Tags */}
           <div className="flex flex-wrap gap-1 mb-3">
@@ -276,7 +276,7 @@ function DesignListItem({ design }: { design: Design }) {
           </div>
 
           {/* Stats */}
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-50">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
                 <Eye className="w-3 h-3" />
