@@ -24,7 +24,6 @@ import { MediaItem } from "@/components/chat/mediaTypes";
 // Import des composants d'interface
 import YourDesignsContent from "@/components/YourDesignsContent";
 import TemplatesContent from "@/components/TemplatesContent";
-import   DotLottie  from "@/components/DotLottieReact";
 
 
 export default function AIDesignToolV2() {
@@ -148,7 +147,6 @@ export default function AIDesignToolV2() {
                     <h1 className="text-5xl ibarra-real-nova bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent dark:text-white mb-10">
                       What will you design today?
                     </h1>
-                    <DotLottie />
                   </div>
 
                   {/* AI Tab Navigation */}
