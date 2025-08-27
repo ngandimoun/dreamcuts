@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Message } from "./types";
 import ChatColumn from "./ChatColumn";
 import ResultColumn from "./ResultColumn";
@@ -23,6 +23,47 @@ export default function ChatInterface({ initialPrompt, onBack }: ChatInterfacePr
   const [generationSteps, setGenerationSteps] = useState<string[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [finalResult, setFinalResult] = useState<string | null>(null);
+  
+  // États pour le redimensionnement
+  const [leftColumnWidth, setLeftColumnWidth] = useState(50); // Pourcentage
+  const [isResizing, setIsResizing] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Gestion du redimensionnement
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+    document.body.classList.add('resizing');
+  }, []);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isResizing || !containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+    
+    // Limiter le redimensionnement entre 20% et 80%
+    const clampedWidth = Math.max(20, Math.min(80, newLeftWidth));
+    setLeftColumnWidth(clampedWidth);
+  }, [isResizing]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsResizing(false);
+    document.body.classList.remove('resizing');
+  }, []);
+
+  // Ajouter/retirer les event listeners
+  useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing, handleMouseMove, handleMouseUp]);
 
   // Simuler la génération des étapes et du résultat final
   const simulateGeneration = async () => {
@@ -83,10 +124,16 @@ export default function ChatInterface({ initialPrompt, onBack }: ChatInterfacePr
         </button>
       </header>
 
-      {/* Interface en deux colonnes */}
-      <div className="flex h-[calc(100vh-80px)]">
+      {/* Interface en deux colonnes redimensionnables */}
+      <div 
+        ref={containerRef}
+        className="flex h-[calc(100vh-80px)] relative"
+      >
         {/* Colonne de gauche - Chat */}
-        <div className="w-1/2 border-r border-gray-200">
+        <div 
+          className="border-r border-gray-200 relative"
+          style={{ width: `${leftColumnWidth}%` }}
+        >
           <ChatColumn
             messages={messages}
             onSendMessage={addMessage}
@@ -97,8 +144,19 @@ export default function ChatInterface({ initialPrompt, onBack }: ChatInterfacePr
           />
         </div>
 
+        {/* Séparateur redimensionnable */}
+        <div
+          className="resize-handle"
+          style={{ left: `calc(${leftColumnWidth}% - 2px)` }}
+          onMouseDown={handleMouseDown}
+          title="Redimensionner les colonnes"
+        />
+
         {/* Colonne de droite - Résultats */}
-        <div className="w-1/2">
+        <div 
+          className="relative"
+          style={{ width: `${100 - leftColumnWidth}%` }}
+        >
           <ResultColumn
             isGenerating={isGenerating}
             generationSteps={generationSteps}

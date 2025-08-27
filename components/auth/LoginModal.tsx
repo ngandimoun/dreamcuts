@@ -29,7 +29,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
     if (error) {
       console.error("Erreur de connexion avec le token Google:", error.message);
       // Gérer l'erreur (par ex: afficher un message à l'utilisateur)
-    } 
+    }
     // Si la connexion est réussie, le listener onAuthStateChange
     // dans votre composant principal s'occupera de fermer la modale et de mettre à jour l'UI.
 
@@ -50,8 +50,8 @@ export default function LoginModal({ onClose }: LoginModalProps) {
     // 2. Rendre le bouton personnalisé dans le div prévu à cet effet
     window.google.accounts.id.renderButton(
       googleButtonDiv.current,
-      { 
-        theme: "outline", 
+      {
+        theme: "outline",
         size: "large",
         type: "standard",
         text: "continue_with",
@@ -65,14 +65,14 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
       <div className="bg-white rounded-2xl p-8 shadow-xl text-center max-w-sm mx-auto">
-        <h2 className="text-xl font-bold mb-2">Connectez-vous pour continuer</h2>
-        <p className="text-gray-600 mb-6">Pour générer un design, vous devez être connecté.</p>
-        
+        <h2 className="text-xl font-bold mb-2">Log in to continue</h2>
+        <p className="text-gray-600 mb-6">You need to be logged in to generate a design.</p>
+
         {/* Le bouton de connexion Google sera injecté ici */}
         <div ref={googleButtonDiv} className="flex justify-center"></div>
 
         <Button variant="ghost" onClick={onClose} className="w-full mt-4 text-gray-500">
-          Annuler
+          Cancel
         </Button>
       </div>
     </div>
