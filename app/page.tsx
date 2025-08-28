@@ -197,7 +197,7 @@ export default function AIDesignToolV2() {
                 <div className="w-full pt-8">
                   {/* Compact Header */}
                   <div className="text-center mb-8">
-                    <h1 className="text-4xl ibarra-real-nova bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent mb-6">
+                    <h1 className="text-5xl ibarra-real-nova bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 bg-clip-text text-transparent dark:text-white mb-6">
                       What will you design today?
                     </h1>
 
@@ -207,7 +207,7 @@ export default function AIDesignToolV2() {
                         onClick={() => setActiveTab("designs")}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === "designs"
                             ? "text-purple-800 bg-gradient-to-r from-cyan-100/70 to-purple-200/70 shadow-sm border border-purple-200/50"
-                            : "text-gray-600 hover:bg-gray-100"
+                            : "text-gray-600 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-500"
                           }`}
                       >
                         <Folder className="w-4 h-4" /> Your designs
@@ -216,23 +216,24 @@ export default function AIDesignToolV2() {
                         onClick={() => setActiveTab("templates")}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors ${activeTab === "templates"
                             ? "text-purple-800 bg-gradient-to-r from-cyan-100/70 to-purple-200/70 shadow-sm border border-purple-200/50"
-                            : "text-gray-600 hover:bg-gray-100"
+                            : "text-gray-600 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-500"
                           }`}
                       >
                         <FileText className="w-4 h-4" /> Templates
                       </button>
                       <button
                         onClick={() => setActiveTab("ai")}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 hover:bg-gray-100"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors text-gray-600 dark:text-gray-50 hover:bg-gray-100 dark:hover:bg-gray-500"
                       >
                         <Sparkles className="w-4 h-4 text-purple-600" /> Prompt AI
                       </button>
                     </div>
+                    
                   </div>
 
                   {/* Content Container */}
                   {activeTab === "designs" && (
-                    <div className="w-full max-w-7xl h-[calc(100vh-270px)]">
+                    <div className="w-full max-w-7xl h-[calc(100vh-260px)]">
                       <YourDesignsContent />
                     </div>
                   )}

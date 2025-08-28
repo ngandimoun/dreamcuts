@@ -103,9 +103,15 @@ export default function YourDesignsContent() {
   });
 
   return (
-    <div className="w-full h-full">
-      {/* Content Container with Rounded Borders - englobe tout à partir du titre */}
-      <div className="h-full bg-background rounded-sm border border-gray-200 overflow-hidden">
+    <div className="w-full h-full relative">
+      {/* Effet de fond flou */}
+      <div
+        className="absolute inset-x-4 top-5 h-full bg-gradient-to-r from-cyan-200 to-purple-300 dark:from-cyan-400 dark:to-purple-500 rounded-2xl filter blur-2xl opacity-50 -z-10"
+        aria-hidden="true"
+      />
+        
+      {/* Content Container with Rounded Borders */}
+      <div className="relative h-full bg-background rounded-sm border border-[#ffdcf1] overflow-hidden">
         <div className="custom-scrollbar overflow-y-auto h-full">
           {/* Page Header */}
           <div className="p-6 pb-4">
@@ -119,7 +125,7 @@ export default function YourDesignsContent() {
           </div>
 
           {/* Controls - devient sticky lors du scroll */}
-          <div className="sticky top-1 bg-background z-10 px-6 pb-4 border-b border-gray-100">
+          <div className="sticky top-0 bg-background z-10 px-6 py-2 pb-4 border-b border-gray-100">
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Search */}
               <div className="flex-1 relative">
